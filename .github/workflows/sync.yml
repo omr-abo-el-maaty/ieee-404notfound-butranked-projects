@@ -1,0 +1,52 @@
+name: Sync 404 NotFound ButRanked ViraRank Projects
+
+on:
+  workflow_dispatch:      # تشغيل يدوي من Actions
+  schedule:
+    - cron: '0 * * * *'   # تحديث كل ساعة (غيّرها لو عايز)
+
+permissions:
+  contents: write
+
+env:
+  TARGET_BRANCH: main
+  BACKEND_URL: https://github.com/Ahmed-Bahgat-Salama/ViraRank.git
+  FLUTTER_URL: https://github.com/Noran-cloud/ViraRank-app.git
+  BACKEND_DIR: 404-virarank-backend
+  FLUTTER_DIR: 404-virarank-flutter
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 404 NotFound ButRanked combined repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Clone source repos (public)
+        run: |
+          mkdir -p /tmp/sources
+          git clone --depth 1 $BACKEND_URL /tmp/sources/backend || true
+          git clone --depth 1 $FLUTTER_URL /tmp/sources/flutter || true
+
+      - name: Copy files into combined repo
+        run: |
+          rm -rf $BACKEND_DIR
+          rm -rf $FLUTTER_DIR
+          mkdir -p $BACKEND_DIR $FLUTTER_DIR
+          rsync -a --delete --exclude='.git' --exclude='.github' /tmp/sources/backend/ $BACKEND_DIR/
+          rsync -a --delete --exclude='.git' --exclude='.github' /tmp/sources/flutter/ $FLUTTER_DIR/
+
+      - name: Commit & push if there are changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "actions@github.com"
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update 404 NotFound ButRanked ViraRank combined repo"
+          git push origin $TARGET_BRANCH
