@@ -16,14 +16,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    // Start animation after a short delay
     Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         _moveUp = true;
       });
     });
 
-    // Navigate after animation finishes
     Timer(const Duration(milliseconds: 1350), () {
       Navigator.pushReplacement(
         context,
@@ -37,11 +35,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: AnimatedAlign(
-        duration: const Duration(seconds: 1), // animation time
+        duration: const Duration(seconds: 1), 
         curve: Curves.easeInOut,
         alignment: _moveUp ? Alignment.topCenter : Alignment.center,
         child: Padding(
-          padding: const EdgeInsets.only(top: 20), // keep space from very top
+          padding: const EdgeInsets.only(top: 20),
           child: Image.asset(
             'assets/images/ViraRank.png',
             

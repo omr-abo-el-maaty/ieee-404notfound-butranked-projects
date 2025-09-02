@@ -25,42 +25,48 @@ class _OnBoardingState extends State<OnBoarding> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset('assets/images/ViraRank.png'),
-                  SizedBox(height: 60,),
+                  SizedBox(height: 60),
                   Image.asset('${on_boarding[index]['image']}'),
                   SizedBox(height: 20),
-                  Text('${on_boarding[index]['text']}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),),
-                  SizedBox(height: 60,),
-                  SizedBox(
-                    width: 50,
-                    child: Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Thing(index == 0? 20:10),
-                        Thing(index == 1? 20:10),
-                        Thing(index == 2? 20:10)],
+                  Text(
+                    '${on_boarding[index]['text']}',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
-                  SizedBox(height: 10+height,),
+                  SizedBox(height: 60),
+                  SizedBox(
+                    width: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Thing(index == 0 ? 20 : 10),
+                        Thing(index == 1 ? 20 : 10),
+                        Thing(index == 2 ? 20 : 10),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10 + height),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
                         onTap: () {
                           setState(() {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> Welcome()));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Welcome(),
+                              ),
+                            );
                           });
                         },
                         mouseCursor: SystemMouseCursors.click,
-                        child: Container(
-                          width: 110,height: 55,
-                          decoration: BoxDecoration(
-                            border: BoxBorder.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white
-                          ),
-                          child: Center(child: Text('Skip',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey,fontSize: 23),)),
-                        ),
+                        child: OnBoarding_Buttons('Skip',Colors.white,Colors.grey,Colors.grey),
                       ),
-                      InkWell( 
+                      InkWell(
                         onTap: () {
                           if (index < on_boarding.length - 1) {
                             setState(() {
@@ -68,25 +74,19 @@ class _OnBoardingState extends State<OnBoarding> {
                               height = index == 2 ? 20 : 0;
                             });
                           } else {
-                            // last page → navigate
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => const Welcome()),
+                              MaterialPageRoute(
+                                builder: (context) => const Welcome(),
+                              ),
                             );
                           }
                         },
                         mouseCursor: SystemMouseCursors.click,
-                        child: Container(
-                          width: 110,height: 55,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.blue
-                          ),
-                          child: Center(child: Text('Next',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 23),)),
-                        ),
+                        child: OnBoarding_Buttons('Next',Colors.blue,Colors.blue,Colors.white),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -97,12 +97,35 @@ class _OnBoardingState extends State<OnBoarding> {
   }
 }
 
-Widget Thing(double width){
+Widget Thing(double width) {
   return Container(
-        width: width,height: 4,
-          decoration: BoxDecoration(
-          color: Colors.blue,
-          borderRadius: BorderRadius.circular(20)
-          ),
-      );
+    width: width,
+    height: 4,
+    decoration: BoxDecoration(
+      color: Colors.blue,
+      borderRadius: BorderRadius.circular(20),
+    ),
+  );
+}
+
+Widget OnBoarding_Buttons(String txt,Color bgcolor,Color brdcolor,Color fcolor) {
+  return Container(
+    width: 110,
+    height: 55,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      color: bgcolor,
+      border: BoxBorder.all(color: brdcolor),
+    ),
+    child: Center(
+      child: Text(
+        '$txt',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: fcolor,
+          fontSize: 23,
+        ),
+      ),
+    ),
+  );
 }

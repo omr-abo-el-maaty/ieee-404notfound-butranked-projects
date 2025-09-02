@@ -117,33 +117,9 @@ bool isSecure = true;
                     SizedBox(height: 40,),
                     Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          width: 45,height: 45,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.grey)
-                          ),
-                          child: Center(child: Image.asset('assets/images/google.png',width: 25,height: 25,)),
-                        ),
-                        Container(
-                          width: 45,height: 45,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.grey)
-                          ),
-                          child: Center(child: Image.asset('assets/images/facebook.png',width: 25,height: 25,)),
-                        ),
-                        Container(
-                          width: 45,height: 45,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.grey)
-                          ),
-                          child: Center(child: Image.asset('assets/images/apple.png',width: 25,height: 25,)),
-                        ),
+                        social_icons('assets/images/google.png'),
+                        social_icons('assets/images/facebook.png'),
+                        social_icons('assets/images/apple.png'),
                       ],
                     ),
                     SizedBox(height: 50,),
@@ -178,4 +154,16 @@ bool isSecure = true;
       ),
     );
   }
+}
+
+Widget social_icons(String img){
+  return Container(
+            width: 45,height: 45,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.grey)
+            ),
+            child: Center(child: Image.asset('$img',width: 25,height: 25,)),
+          );
 }
